@@ -1,6 +1,7 @@
 import VideoList from './VideoList.js';
 import VideoPlayer from './VideoPlayer.js';
 import exampleVideoData from '../data/exampleVideoData.js';
+import YOUTUBE_API_KEY from '../config/youtube.js';
 
 class App extends React.Component {
   constructor(props) {
@@ -9,6 +10,16 @@ class App extends React.Component {
   }
   onClick(video) {
     this.setState({video: video});
+  }
+  componentDidMount() {
+    let options = {
+      key: YOUTUBE_API_KEY,
+      q: 'react',
+      maxResults: 5
+    };
+    this.props.searchYouTube(options, (data) => {
+      this.setState({video: data[0], videos: data});
+    });
   }
   render() {
     return (
