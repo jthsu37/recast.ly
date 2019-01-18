@@ -60,6 +60,7 @@ describe('App', function() {
     });
 
     it('should call `searchYouTube` when app is initialized', function() {
+
       expect(searchYouTubeStub.called).to.be.true;
     });
 

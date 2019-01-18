@@ -9,7 +9,7 @@ var searchYouTube = (options, callback, errorCallback) => {
     url: 'https://www.googleapis.com/youtube/v3/search',
     type: 'GET',
     data: options,
-    contentType: 'application/json',
+    contentType: 'json',
     success: callback,
     error: errorCallback || function(error) {
       console.error('Youtube: Failed to fetch messages', error);

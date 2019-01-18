@@ -39,7 +39,7 @@ describe ('Search', function() {
 
       var newVideoEntryTitleElements = scryRenderedDOMComponentsWithClass(app, 'video-list-entry-title');
       newVideoEntryTitleElements.forEach((videoEntryTitle, i) => {
-        expect(videoEntryTitle.innerHTML).to.equal(moreFakeVideoData[i].snippet.title);
+        expect(videoEntryTitle.innerHTML).to.equal(fakeVideoData[i].snippet.title);
       });
     });
   });

@@ -1,3 +1,4 @@
+import Search from './Search.js';
 import VideoList from './VideoList.js';
 import VideoPlayer from './VideoPlayer.js';
 import exampleVideoData from '../data/exampleVideoData.js';
@@ -7,6 +8,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {video: exampleVideoData[0], videos: exampleVideoData};
+    this.handleChange = _.debounce(this.handleChange, 500);
   }
   onClick(video) {
     this.setState({video: video});
@@ -18,7 +20,25 @@ class App extends React.Component {
       maxResults: 5
     };
     this.props.searchYouTube(options, (data) => {
-      this.setState({video: data[0], videos: data});
+      if (Array.isArray(data)) {
+        this.setState({video: data[0], videos: data});
+      } else {
+        this.setState({video: data.items[0], videos: data.items});
+      }
+    });
+  }
+  handleChange(event) {
+    let options = {
+      key: YOUTUBE_API_KEY,
+      q: event,
+      maxResults: 5
+    };
+    this.props.searchYouTube(options, (data) => {
+      if (Array.isArray(data)) {
+        this.setState({video: data[0], videos: data});
+      } else {
+        this.setState({video: data.items[0], videos: data.items});
+      }
     });
   }
   render() {
@@ -26,7 +46,7 @@ class App extends React.Component {
       <div>
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
-            <div><h5><em>search</em> view goes here</h5></div>
+            <Search onChange={this.handleChange.bind(this)}/>
           </div>
         </nav>
         <div className="row">
